@@ -21,7 +21,12 @@ class RepoResultsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 20
+        if repos == nil{
+            return 0
+        }
+        else{
+            return repos.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -67,6 +72,8 @@ class RepoResultsViewController: UIViewController, UITableViewDelegate, UITableV
             }
             
             self.repos = newRepos
+            
+            self.tableView.reloadData()
             
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             }, error: { (error) -> Void in

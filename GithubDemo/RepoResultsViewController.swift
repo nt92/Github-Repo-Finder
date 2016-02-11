@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 
 // Main ViewController
-class RepoResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RepoResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SettingsViewControllerDelegate {
 
     var searchBar: UISearchBar!
     var searchSettings = GithubRepoSearchSettings()
@@ -80,6 +80,27 @@ class RepoResultsViewController: UIViewController, UITableViewDelegate, UITableV
                 print(error)
         })
     }
+    
+    @IBAction func cancelToPlayersViewController(segue:UIStoryboardSegue) {
+    }
+    
+    @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        let navigationController = segue.destinationViewController as! UINavigationController
+        let settingsViewController = navigationController.topViewController as! SettingsViewController
+        settingsViewController.delegate = self
+//        let navController = segue.destinationViewController as! UINavigationController
+//        let vc = navController.topViewController as! SettingsViewController
+        //vc.delegate = self
+    }
+    
+    func settingsViewController(settingsViewController: SettingsViewController, didUpdateFilters filters: [String : AnyObject]) {
+        GithubRepo.fetchRepos(<#T##settings: GithubRepoSearchSettings##GithubRepoSearchSettings#>, successCallback: <#T##([GithubRepo]) -> Void#>, error: <#T##((NSError?) -> Void)?##((NSError?) -> Void)?##(NSError?) -> Void#>)
+    }
+
 }
 
 // SearchBar methods
